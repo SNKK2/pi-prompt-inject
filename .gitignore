@@ -1,6 +1,6 @@
-# 敏感文件 - 永远不要提交这些
-prompt.md
-state.json
+# 用户本地状态文件（每次 /inject edit 会生成个人的）
+# 仓库内的 prompts/default.md 是默认提示词，不受此规则影响
+~/.pi/prompt-inject/state.json
 *.key
 *.pem
 *.secret

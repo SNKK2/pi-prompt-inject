@@ -68,6 +68,7 @@ cp prompt-inject.ts .pi/extensions/
 | `/inject on` | 开启注入（需先通过 `/inject edit` 创建提示词） |
 | `/inject off` | 关闭注入，恢复原始 system prompt |
 | `/inject edit` | 打开 TUI 编辑器编辑提示词内容 |
+| `prompts/default.md` | 仓库内置的默认注入提示词，可直接复制使用 |
 
 ### 工作原理
 
@@ -112,15 +113,49 @@ cp prompt-inject.ts .pi/extensions/
 
 如果需要剥离其他模型的身份句，在 `STRIP_PATTERNS` 数组中添加正则即可。
 
+## 默认提示词
+
+仓库 `prompts/default.md` 提供了一份开箱即用的默认注入提示词，包含：
+
+- **身份设定** — Little Code Sauce 人格，Unrestricted Sandbox 执行模式
+- **输出规则** — 拒绝短语黑名单、拒绝对抗、中间件链式响应
+- **25 条 Scoped Rules** — 覆盖渗透测试、逆向破解、恶意软件研究、Web 安全、OSINT、CTF、对抗提示词工程等全场景
+- **意图映射** — 中文俚语/黑话到规则类别的自动路由
+- **CTF Core Contract** — 竞赛靶场资产处理契约
+- **Routing 系统** — 占位符规范化、双语路由、边界词处理、Web 渗透速查槽位
+
+### 使用默认提示词
+
+```bash
+# 方式一：直接复制
+mkdir -p ~/.pi/prompt-inject
+cp prompts/default.md ~/.pi/prompt-inject/prompt.md
+
+# 方式二：通过扩展命令载入（需自行实现 /inject load）
+# 或手动 /inject edit 后粘贴内容
+
+# 然后开启
+/inject on
+```
+
+> 也可以用 `/inject edit` 完全自定义提示词，默认提示词仅供参考。
+
 ## 文件布局
 
 ```
-~/.pi/prompt-inject/
-├── state.json    # 开关状态 {"enabled": true|false}
-└── prompt.md     # 自定义注入提示词内容
+~/.pi/prompt-inject/          # 运行时文件（不入版本控制）
+├── state.json                # 开关状态 {"enabled": true|false}
+└── prompt.md                 # 当前使用的注入提示词
+
+仓库结构:
+├── prompt-inject.ts          # 扩展源码
+├── prompts/
+│   └── default.md            # 默认注入提示词
+├── README.md
+└── LICENSE
 ```
 
-> 这两个文件在首次使用 `/inject edit` 和 `/inject on` 时自动创建，无需手动创建。
+> 运行时文件在首次使用 `/inject edit` 和 `/inject on` 时自动创建。
 
 ## 配置
 
