@@ -1,0 +1,8 @@
+# 敏感文件 - 永远不要提交这些
+prompt.md
+state.json
+*.key
+*.pem
+*.secret
+.env
+.env.*
